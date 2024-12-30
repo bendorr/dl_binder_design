@@ -1,3 +1,5 @@
+### Ben Orr 12.30.24: Adapted code from nrbennet/dl_binder_design
+
 # dl_binder_design
 
 This repo contains the scripts described in the paper [Improving de novo Protein Binder Design with Deep Learning](https://www.nature.com/articles/s41467-023-38328-5).
