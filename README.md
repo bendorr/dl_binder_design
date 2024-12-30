@@ -1,4 +1,6 @@
-# Ben Orr 12.30.24: Adapted code from nrbennet/dl_binder_design
+### Ben Orr 
+### 12.30.24
+### Adapted code from nrbennet/dl_binder_design
 
 # dl_binder_design
 
