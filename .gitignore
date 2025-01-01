@@ -9,3 +9,5 @@ af2_initial_guess/__pycache__
 test/
 mpnn_fr/ProteinMPNN/
 mpnn_fr/__pycache__
+af2_initial_guess/params
+

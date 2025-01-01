@@ -3,17 +3,13 @@ import tarfile
 from pathlib import Path
 from multiprocessing import Queue, Process
 
-### Ben Orr 1.1.25: avoiding this import
-# import appdirs
+import appdirs
 import tqdm
 import requests
 
 # The data dir location logic switches between a version with and one without "params" because alphafold
 # always internally joins "params". (We should probably patch alphafold)
-# default_data_dir = Path(appdirs.user_cache_dir(__package__ or "colabfold"))
-
-### Ben Orr 1.1.25: For now, download params to current directory
-default_data_dir = Path('.')
+default_data_dir = Path(appdirs.user_cache_dir(__package__ or "colabfold"))
 
 def download(url, params_dir, size_queue, progress_queue):
     try:
@@ -145,5 +141,4 @@ if __name__ == "__main__":
     #     download_alphafold_params("AlphaFold2-ptm")
 
     ## Ben Orr 12.30.24: For my purposes, I'll just download the "alphafold2_multimer_v3" params
-    print("Downloading alphafold2_multimer_v3 params...")
     download_alphafold_params("alphafold2_multimer_v3")
