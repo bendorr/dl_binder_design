@@ -422,7 +422,8 @@ class AlphaFold(hk.Module):
       batch,
       is_training,
       return_representations=False,
-      safe_key=None):
+      safe_key=None,
+      initial_guess=None): ### Ben Orr 1.2.25: Added initial_guess=None
 
     c = self.config
     impl = AlphaFoldIteration(c, self.global_config)
@@ -444,7 +445,9 @@ class AlphaFold(hk.Module):
       }
       return jax.tree.map(jax.lax.stop_gradient, new_prev)
 
-    def apply_network(prev, safe_key):
+    ### Ben Orr 1.2.25: Added initial_guess=None
+    ### This function is analogous to modules.do_call()
+    def apply_network(prev, safe_key, initial_guess=None):
       recycled_batch = {**batch, **prev}
       return impl(
           batch=recycled_batch,
@@ -456,6 +459,12 @@ class AlphaFold(hk.Module):
     if emb_config.recycle_pos:
       prev['prev_pos'] = jnp.zeros(
           [num_res, residue_constants.atom_type_num, 3])
+      
+      ### Ben Orr 1.2.25: Adapted from Nate Bennett.
+      ### If an initial guess is provided, add it to the previous positions.
+      if emb_config.initial_guess:
+        prev_pos += initial_guess
+        
     if emb_config.recycle_features:
       prev['prev_msa_first_row'] = jnp.zeros(
           [num_res, emb_config.msa_channel])
