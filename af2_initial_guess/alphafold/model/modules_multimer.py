@@ -420,7 +420,7 @@ class AlphaFold(hk.Module):
   def __call__(
       self,
       batch,
-      is_training,
+      is_training=False,
       return_representations=False,
       safe_key=None,
       initial_guess=None): ### Ben Orr 1.2.25: Added initial_guess=None
@@ -464,7 +464,7 @@ class AlphaFold(hk.Module):
       ### If an initial guess is provided, add it to the previous positions.
       if emb_config.initial_guess:
         prev_pos += initial_guess
-        
+
     if emb_config.recycle_features:
       prev['prev_msa_first_row'] = jnp.zeros(
           [num_res, emb_config.msa_channel])
