@@ -292,6 +292,10 @@ class AF2_runner():
         # Generate features
         feature_dict, initial_guess = self.featurize(feat_holder)
 
+        ### Ben Orr 1.2.25: Printing feature_dict and initial_guess to find dtype object entries
+        print(f"feature_dict:\n{feature_dict}")
+        print(f"initial_guess:\n{initial_guess}")
+
         # Run model
         start = timer()
         print(f'Running {self.model_name}')
