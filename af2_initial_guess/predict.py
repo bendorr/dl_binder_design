@@ -327,10 +327,10 @@ class AF2_runner():
         #                                              initial_guess )
         
         ### Ben Orr 1.2.25: Reordering these inputs for model.RunModel._forward_fn()
-        prediction_result = self.model_runner.apply( self.model_runner.params,
-                                                     feature_dict,
-                                                     initial_guess=initial_guess,
-                                                     safe_key=jax.random.PRNGKey(0),
+        prediction_result = self.model_runner.apply(self.model_runner.params,
+                                                    jax.random.PRNGKey(0), ### Ben Orr 1.2.25: Apply must be called with a RNG as the second argument
+                                                    feature_dict,
+                                                    initial_guess=initial_guess,,
                                                     )
 
         print(f'Tag: {feat_holder.tag} finished AF2 prediction in {timer() - start} seconds')
