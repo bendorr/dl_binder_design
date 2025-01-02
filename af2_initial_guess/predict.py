@@ -295,10 +295,17 @@ class AF2_runner():
         ### Ben Orr 1.2.25: Printing feature_dict and initial_guess to find dtype object entries
         # print(f"feature_dict:\n{feature_dict}")
         for key in feature_dict:
-            print(f"{key}: {feature_dict[key].dtype}")
+            try:
+                print(f"{key}: {feature_dict[key].dtype}")
+            except:
+                print(f"{key}: {type(feature_dict[key])}")
         # print(f"initial_guess:\n{initial_guess}")
         for key in initial_guess:
-            print(f"{key}: {initial_guess[key].dtype}")
+            try:
+                print(f"{key}: {initial_guess[key].dtype}")
+            except:
+                print(f"{key}: {type(initial_guess[key])}")
+
 
         # Run model
         start = timer()
