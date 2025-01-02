@@ -575,9 +575,10 @@ for pdb in struct_manager.iterate():
 
         except KeyboardInterrupt: sys.exit( "Script killed by Control+C, exiting" )
 
-        except:
-            seconds = int(timer() - t0)
-            print( "Struct with tag %s failed in %i seconds with error: %s"%( pdb, seconds, sys.exc_info()[0] ) )
+        ### Ben Orr 1.2.25: Removing this except clause to get full error traceback.
+        # except:
+        # seconds = int(timer() - t0)
+        # print( "Struct with tag %s failed in %i seconds with error: %s"%( pdb, seconds, sys.exc_info()[0] ) )
 
     # We are done with one pdb, record that we finished
     struct_manager.record_checkpoint(pdb)
