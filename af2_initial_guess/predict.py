@@ -300,11 +300,12 @@ class AF2_runner():
             except:
                 print(f"{key}: {type(feature_dict[key])}")
         # print(f"initial_guess:\n{initial_guess}")
-        for key in initial_guess:
-            try:
-                print(f"{key}: {initial_guess[key].dtype}")
-            except:
-                print(f"{key}: {type(initial_guess[key])}")
+        print(f"initial_guess: {type(initial_guess)}")
+        # for key in initial_guess:
+        #     try:
+        #         print(f"{key}: {initial_guess[key].dtype}")
+        #     except:
+        #         print(f"{key}: {type(initial_guess[key])}")
 
 
         # Run model
