@@ -116,6 +116,7 @@ class AF2_runner():
         model_config.data.common.max_extra_msa = 5
         model_config.data.eval.max_msa_clusters = 5
 
+        ### Ben Orr 1.2.25: Print model_config to find multimer_mode (evaluates to True)
         print("model_config.model.global_config.multimer_mode")
         print(model_config.model.global_config.multimer_mode)
 
@@ -305,16 +306,16 @@ class AF2_runner():
 
         print(f"initial_guess: {type(initial_guess)}")
 
-        ### Ben Orr 1.2.25: Remove the dtype object entries from feature_dict
-        print(f"Removing keys sequence and domain_name")
-        del feature_dict['sequence']
-        del feature_dict['domain_name']
+        # ### Ben Orr 1.2.25: Remove the dtype object entries from feature_dict
+        # print(f"Removing keys sequence and domain_name")
+        # del feature_dict['sequence']
+        # del feature_dict['domain_name']
 
-        ### Ben Orr 1.2.25: Remove the template_sequence, template_domain_names, and template_release_date keys
-        print(f"Removing keys template_sequence, template_domain_names, and template_release_date")
-        del feature_dict['template_sequence']
-        del feature_dict['template_domain_names']
-        del feature_dict['template_release_date']
+        # ### Ben Orr 1.2.25: Remove the template_sequence, template_domain_names, and template_release_date keys
+        # print(f"Removing keys template_sequence, template_domain_names, and template_release_date")
+        # del feature_dict['template_sequence']
+        # del feature_dict['template_domain_names']
+        # del feature_dict['template_release_date']
 
         # Run model
         start = timer()
