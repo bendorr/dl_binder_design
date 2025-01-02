@@ -72,11 +72,23 @@ class RunModel:
     self.multimer_mode = config.model.global_config.multimer_mode
 
     if self.multimer_mode:
-      def _forward_fn(batch):
+      ### Ben Orr 1.2.25: Adding initial_guess=None
+      def _forward_fn(batch,
+                      initial_guess=None,
+                      safe_key=None):
         model = modules_multimer.AlphaFold(self.config.model)
+        
+        # return model(
+        #     batch,
+        #     is_training=False)
+
+        ### Ben Orr 1.2.2025: Matching inputs to modules_multimer.AlphaFold.__call__()
         return model(
-            batch,
-            is_training=False)
+          batch,
+          is_training=False,
+          return_representations=False,
+          safe_key=safe_key,
+          initial_guess=initial_guess)
     else:
       def _forward_fn(batch):
         model = modules.AlphaFold(self.config.model)

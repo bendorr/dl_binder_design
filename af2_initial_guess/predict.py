@@ -321,10 +321,17 @@ class AF2_runner():
         start = timer()
         print(f'Running {self.model_name}')
 
+        # prediction_result = self.model_runner.apply( self.model_runner.params,
+        #                                              jax.random.PRNGKey(0),
+        #                                              feature_dict,
+        #                                              initial_guess )
+        
+        ### Ben Orr 1.2.25: Reordering these inputs for model.RunModel._forward_fn()
         prediction_result = self.model_runner.apply( self.model_runner.params,
-                                                     jax.random.PRNGKey(0),
                                                      feature_dict,
-                                                     initial_guess )
+                                                     initial_guess=initial_guess,
+                                                     safe_key=jax.random.PRNGKey(0),
+                                                    )
 
         print(f'Tag: {feat_holder.tag} finished AF2 prediction in {timer() - start} seconds')
 
