@@ -293,20 +293,19 @@ class AF2_runner():
         feature_dict, initial_guess = self.featurize(feat_holder)
 
         ### Ben Orr 1.2.25: Printing feature_dict and initial_guess to find dtype object entries
-        # print(f"feature_dict:\n{feature_dict}")
+
         for key in feature_dict:
             try:
                 print(f"{key}: {feature_dict[key].dtype}")
             except:
                 print(f"{key}: {type(feature_dict[key])}")
-        # print(f"initial_guess:\n{initial_guess}")
-        print(f"initial_guess: {type(initial_guess)}")
-        # for key in initial_guess:
-        #     try:
-        #         print(f"{key}: {initial_guess[key].dtype}")
-        #     except:
-        #         print(f"{key}: {type(initial_guess[key])}")
 
+        print(f"initial_guess: {type(initial_guess)}")
+
+        ### Ben Orr 1.2.25: Remove the dtype object entries from feature_dict
+        print(f"Removing keys sequence and domain_name")
+        del feature_dict['sequence']
+        del feature_dict['domain_name']
 
         # Run model
         start = timer()
