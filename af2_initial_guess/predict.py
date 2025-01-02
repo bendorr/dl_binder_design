@@ -33,7 +33,7 @@ from rosetta import *
 init( '-in:file:silent_struct_type binary -mute all' )
 
 ### Ben Orr 1.2.25: get full error traceback from JAX
-JAX_TRACEBACK_FILTERING='off'
+jax.config.update("jax_traceback_filtering", "off")
 
 def range1(size): return range(1, size+1)
 
