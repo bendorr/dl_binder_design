@@ -313,8 +313,8 @@ class AF2_runner():
         del feature_dict['template_domain_names']
         del feature_dict['template_release_date']
 
-        print("config.model.global_config.multimer_mode")
-        print(config.model.global_config.multimer_mode)
+        print("model_config.model.global_config.multimer_mode")
+        print(model_config.model.global_config.multimer_mode)
 
         # Run model
         start = timer()
