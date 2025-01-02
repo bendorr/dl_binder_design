@@ -99,8 +99,8 @@ class AF2_runner():
 
         # Other models may be run but their weights will also need to be downloaded
         # self.model_name = "model_1_ptm"
-        ## Ben Orr 12.30.24: multimer model names: alphafold2_multimer_v1, alphafold2_multimer_v2, alphafold2_multimer_v3
-        self.model_name = "alphafold2_multimer_v3"
+        ## Ben Orr 12.30.24: multimer model names in config.CONFIG_DIFFS: model_N_multimer_v3
+        self.model_name = "model_1_multimer_v3"
 
         model_config = config.model_config(self.model_name)
         model_config.data.eval.num_ensemble = 1
@@ -489,6 +489,9 @@ class StructManager():
         if not self.pdb and not self.silent:
             raise Exception('Neither pdb nor silent is set to True. Cannot load pose')
 
+        ### Ben Orr 1.1.25: Unfortunately, I cannot avoid using Rosetta and PyRosetta
+        ### in this script, as a PyRosetta pose is used in self.input_check to ensure
+        ### that inputs have unique residue indices.
         if self.pdb:
             pose = pose_from_pdb(tag)
             usetag = '.'.join(os.path.basename(tag).split('.')[:-1])
