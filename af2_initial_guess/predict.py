@@ -28,9 +28,9 @@ parent = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(os.path.join(parent, 'include'))
 from silent_tools import silent_tools
 
-# from pyrosetta import *
-# from rosetta import *
-# init( '-in:file:silent_struct_type binary -mute all' )
+from pyrosetta import *
+from rosetta import *
+init( '-in:file:silent_struct_type binary -mute all' )
 
 def range1(size): return range(1, size+1)
 
@@ -264,10 +264,8 @@ class AF2_runner():
         
         with open(self.struct_manager.tmp_fn, 'w') as f: f.write(unrelaxed_pdb_lines)
 
-        ### Ben Orr 1.1.25: Removing all pyrosetta calls
-        ### feat_holder.outpose is now not storing a pose object
         # Now read the structure to a Rosetta pose
-        # feat_holder.outpose = pyrosetta.pose_from_file(self.struct_manager.tmp_fn)
+        feat_holder.outpose = pyrosetta.pose_from_file(self.struct_manager.tmp_fn)
 
         os.remove(self.struct_manager.tmp_fn)
         
@@ -331,14 +329,10 @@ class StructManager():
 
             self.struct_iterator = silent_tools.get_silent_index(args.silent)['tags']
 
-            ### Ben Orr 1.1.25: Removing all rosetta calls
-            ### I cannot use the silent option without first handling self.std_in 
-            # self.sfd_in = rosetta.core.io.silent.SilentFileData(rosetta.core.io.silent.SilentFileOptions())
-            # self.sfd_in.read_file(args.silent)
+            self.sfd_in = rosetta.core.io.silent.SilentFileData(rosetta.core.io.silent.SilentFileOptions())
+            self.sfd_in.read_file(args.silent)
 
-            ### Ben Orr 1.1.25: Removing all rosetta calls
-            ### I believe core is imported from rosetta or pyrosetta
-            # self.sfd_out = core.io.silent.SilentFileData(args.outsilent, False, False, "binary", core.io.silent.SilentFileOptions())
+            self.sfd_out = core.io.silent.SilentFileData(args.outsilent, False, False, "binary", core.io.silent.SilentFileOptions())
 
             self.outsilent = args.outsilent
 
@@ -489,9 +483,6 @@ class StructManager():
         if not self.pdb and not self.silent:
             raise Exception('Neither pdb nor silent is set to True. Cannot load pose')
 
-        ### Ben Orr 1.1.25: Unfortunately, I cannot avoid using Rosetta and PyRosetta
-        ### in this script, as a PyRosetta pose is used in self.input_check to ensure
-        ### that inputs have unique residue indices.
         if self.pdb:
             pose = pose_from_pdb(tag)
             usetag = '.'.join(os.path.basename(tag).split('.')[:-1])
