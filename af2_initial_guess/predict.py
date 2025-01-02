@@ -307,6 +307,12 @@ class AF2_runner():
         del feature_dict['sequence']
         del feature_dict['domain_name']
 
+        ### Ben Orr 1.2.25: Remove the template_sequence, template_domain_names, and template_release_date keys
+        print(f"Removing keys template_sequence, template_domain_names, and template_release_date")
+        del feature_dict['template_sequence']
+        del feature_dict['template_domain_names']
+        del feature_dict['template_release_date']
+
         # Run model
         start = timer()
         print(f'Running {self.model_name}')
