@@ -330,7 +330,7 @@ class AF2_runner():
         prediction_result = self.model_runner.apply(self.model_runner.params,
                                                     jax.random.PRNGKey(0), ### Ben Orr 1.2.25: Apply must be called with a RNG as the second argument
                                                     feature_dict,
-                                                    initial_guess=initial_guess,,
+                                                    initial_guess=initial_guess,
                                                     )
 
         print(f'Tag: {feat_holder.tag} finished AF2 prediction in {timer() - start} seconds')
