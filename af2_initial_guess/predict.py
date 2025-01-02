@@ -116,6 +116,9 @@ class AF2_runner():
         model_config.data.common.max_extra_msa = 5
         model_config.data.eval.max_msa_clusters = 5
 
+        print("model_config.model.global_config.multimer_mode")
+        print(model_config.model.global_config.multimer_mode)
+
         params_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)),'model_weights')
 
         model_params = data.get_model_haiku_params(model_name=self.model_name, data_dir=params_dir)
@@ -312,9 +315,6 @@ class AF2_runner():
         del feature_dict['template_sequence']
         del feature_dict['template_domain_names']
         del feature_dict['template_release_date']
-
-        print("model_config.model.global_config.multimer_mode")
-        print(model_config.model.global_config.multimer_mode)
 
         # Run model
         start = timer()
