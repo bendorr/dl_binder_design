@@ -103,7 +103,7 @@ class AF2_runner():
         # Other models may be run but their weights will also need to be downloaded
         # self.model_name = "model_1_ptm"
         ## Ben Orr 12.30.24: multimer model names in config.CONFIG_DIFFS: model_N_multimer_v3
-        self.model_name = "model_1_multimer_v3"
+        self.model_name = "model_2_multimer_v3"
 
         model_config = config.model_config(self.model_name)
         model_config.data.eval.num_ensemble = 1
