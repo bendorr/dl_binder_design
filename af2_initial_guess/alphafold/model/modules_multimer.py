@@ -205,6 +205,7 @@ def nearest_neighbor_clusters(batch, gap_agreement_weight=0.):
 def create_msa_feat(batch):
   """Create and concatenate MSA features."""
   msa_1hot = jax.nn.one_hot(batch['msa'], 23)
+  print("msa_1hot.shape: ", msa_1hot.shape)
   # deletion_matrix = batch['deletion_matrix']
 
   ### Ben Orr 1.2.25: Setting a dummy deletion_matrix
