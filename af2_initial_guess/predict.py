@@ -306,14 +306,12 @@ class AF2_runner():
         print(f"initial_guess: {type(initial_guess)}")
 
         ### Ben Orr 1.2.25: Remove the dtype object entries from feature_dict
-        print(f"Removing keys sequence and domain_name")
-        del feature_dict['sequence']
-        del feature_dict['domain_name']
-        ### Ben Orr 1.2.25: Remove the template_sequence, template_domain_names, and template_release_date keys
-        print(f"Removing keys template_sequence, template_domain_names, and template_release_date")
-        del feature_dict['template_sequence']
-        del feature_dict['template_domain_names']
-        del feature_dict['template_release_date']
+        ### Ben Orr 1.2.25: Also remove the template_sequence, template_domain_names, and template_release_date keys
+        for key in ['sequence', 'domain_name', 'template_sequence', 'template_domain_names', 'template_release_date']:
+            try:
+                del feature_dict[key]
+            except:
+                print(f"Key {key} not found in feature_dict")
 
         ### Ben Orr 1.2.25: Add the msa_mask to the feature_dict
         feature_dict['msa_mask'] = np.ones_like(feature_dict['msa'], dtype=bool)
