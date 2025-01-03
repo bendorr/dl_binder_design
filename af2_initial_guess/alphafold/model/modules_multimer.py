@@ -211,9 +211,12 @@ def create_msa_feat(batch):
   # deletion_matrix = np.zeros(batch['msa'].shape, dtype=np.float32)
   ### Ben Orr 1.2.25: It appears that af2_initial_guess uses deletion_matrix_int instead of deletion_matrix
   deletion_matrix = batch['deletion_matrix_int']
+  print("batch['deletion_matrix_int'].shape: ", batch['deletion_matrix_int'].shape)
 
   has_deletion = jnp.clip(deletion_matrix, 0., 1.)[..., None]
+  print("has_deletion.shape: ", has_deletion.shape)
   deletion_value = (jnp.arctan(deletion_matrix / 3.) * (2. / jnp.pi))[..., None]
+  print("deletion_value.shape: ", deletion_value.shape)
 
   # deletion_mean_value = (jnp.arctan(batch['cluster_deletion_mean'] / 3.) *
   #                        (2. / jnp.pi))[..., None]
@@ -224,9 +227,11 @@ def create_msa_feat(batch):
   ### Ben Orr 1.2.25: I'll try using deletion_matrix_int instead of cluster_deletion_mean
   deletion_mean_value = (jnp.arctan(batch['deletion_matrix_int'] / 3.) *
                          (2. / jnp.pi))[..., None]
+  print("deletion_mean_value.shape: ", deletion_mean_value.shape)
 
   ### Ben Orr 1.2.25: Setting a dummy batch['cluster_profile']
   batch['cluster_profile'] = np.zeros(batch['msa'].shape, dtype=np.float32)[..., None]
+  print("batch['cluster_profile'].shape: ", batch['cluster_profile'].shape)
 
   msa_feat = [
       msa_1hot,
@@ -696,11 +701,12 @@ class EmbeddingsAndEvoformer(hk.Module):
 
       # msa_feat = create_msa_feat(batch).astype(dtype)
 
-      ### Ben Orr 1.2.25: Reshape msa_feat to match n_params for preprocess_msa
       msa_feat = create_msa_feat(batch).astype(dtype)
-      # print("temp_msa_feat.shape: ", temp_msa_feat.shape)
-      # msa_feat = np.vstack((temp_msa_feat, np.zeros((23,256))))
+
+      ### Ben Orr 1.2.25: msa_feat.shape is (1, 229, 27)
       print("msa_feat.shape: ", msa_feat.shape)
+
+      print("c.msa_channel: ", c.msa_channel)
 
       preprocess_msa = common_modules.Linear(
           c.msa_channel, name='preprocess_msa')(
