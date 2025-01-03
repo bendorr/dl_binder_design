@@ -697,9 +697,9 @@ class EmbeddingsAndEvoformer(hk.Module):
       # msa_feat = create_msa_feat(batch).astype(dtype)
 
       ### Ben Orr 1.2.25: Reshape msa_feat to match n_params for preprocess_msa
-      temp_msa_feat = create_msa_feat(batch).astype(dtype)
-      print("temp_msa_feat.shape: ", temp_msa_feat.shape)
-      msa_feat = np.vstack((temp_msa_feat, np.zeros((23,256))))
+      msa_feat = create_msa_feat(batch).astype(dtype)
+      # print("temp_msa_feat.shape: ", temp_msa_feat.shape)
+      # msa_feat = np.vstack((temp_msa_feat, np.zeros((23,256))))
       print("msa_feat.shape: ", msa_feat.shape)
 
       preprocess_msa = common_modules.Linear(
