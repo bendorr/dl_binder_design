@@ -17,7 +17,9 @@ from jax.lib import xla_bridge
 from alphafold.common import residue_constants
 from alphafold.common import protein
 from alphafold.common import confidence
-from alphafold.data import pipeline
+# from alphafold.data import pipeline
+### Ben Orr 1.2.25: Importing pipeline_multimer instead of pipeline
+from alphafold.data import pipeline_multimer as pipeline
 from alphafold.model import data
 from alphafold.model import config
 from alphafold.model import model
@@ -310,7 +312,6 @@ class AF2_runner():
         print(f"Removing keys sequence and domain_name")
         del feature_dict['sequence']
         del feature_dict['domain_name']
-
         ### Ben Orr 1.2.25: Remove the template_sequence, template_domain_names, and template_release_date keys
         print(f"Removing keys template_sequence, template_domain_names, and template_release_date")
         del feature_dict['template_sequence']
