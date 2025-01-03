@@ -750,6 +750,10 @@ class EmbeddingsAndEvoformer(hk.Module):
       print("c.recycle_features: ", c.recycle_features)
 
       if c.recycle_pos:
+
+        print("batch['aatype'].shape: ", batch['aatype'].shape)
+        print("batch['prev_pos'].shape: ", batch['prev_pos'].shape)
+
         prev_pseudo_beta = modules.pseudo_beta_fn(
             batch['aatype'], batch['prev_pos'], None)
         
