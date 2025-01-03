@@ -218,6 +218,9 @@ def create_msa_feat(batch):
   ### Ben Orr 1.2.25: Setting a dummy deletion_mean_value
   deletion_mean_value = np.zeros(batch['msa'].shape, dtype=np.float32)
 
+  ### Ben Orr 1.2.25: Setting a dummy batch['cluster_profile']
+  batch['cluster_profile'] = np.zeros(batch['msa'].shape, dtype=np.float32)
+
   msa_feat = [
       msa_1hot,
       has_deletion,
