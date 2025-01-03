@@ -1539,17 +1539,31 @@ def pseudo_beta_fn(aatype, all_atom_positions, all_atom_masks):
   """Create pseudo beta features."""
 
   is_gly = jnp.equal(aatype, residue_constants.restype_order['G'])
+
+  print("is_gly: ", is_gly.shape)
+
   ca_idx = residue_constants.atom_order['CA']
+
+  print("ca_idx: ", ca_idx)
+
   cb_idx = residue_constants.atom_order['CB']
+
+  print("cb_idx: ", cb_idx)
+
   pseudo_beta = jnp.where(
       jnp.tile(is_gly[..., None], [1] * len(is_gly.shape) + [3]),
       all_atom_positions[..., ca_idx, :],
       all_atom_positions[..., cb_idx, :])
+  
+  print("pseudo_beta: ", pseudo_beta.shape)
 
   if all_atom_masks is not None:
     pseudo_beta_mask = jnp.where(
         is_gly, all_atom_masks[..., ca_idx], all_atom_masks[..., cb_idx])
     pseudo_beta_mask = pseudo_beta_mask.astype(jnp.float32)
+    
+    print("pseudo_beta_mask: ", pseudo_beta_mask.shape)
+    
     return pseudo_beta, pseudo_beta_mask
   else:
     return pseudo_beta
