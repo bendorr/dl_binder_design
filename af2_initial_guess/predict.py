@@ -306,6 +306,9 @@ class AF2_runner():
 
         print(f"initial_guess: {type(initial_guess)}")
 
+        print(f"MSA is:")
+        print(feature_dict['msa'])
+
         ### Ben Orr 1.2.25: Remove the dtype object entries from feature_dict
         print(f"Removing keys sequence and domain_name")
         del feature_dict['sequence']
