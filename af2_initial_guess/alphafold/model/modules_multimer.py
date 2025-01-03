@@ -500,6 +500,10 @@ class AlphaFold(hk.Module):
         ca_idx = residue_constants.atom_order['CA']
         sq_diff = jnp.square(distances(prev['prev_pos'][:, ca_idx, :]) -
                              distances(next_in['prev_pos'][:, ca_idx, :]))
+        
+        ### Ben Orr 1.2.25: Adding batch['seq_mask'] to be all 1's (all positions considered)
+        batch['seq_mask'] = np.ones_like(batch['aatype'].shape[0], dtype=np.float32)
+        
         mask = batch['seq_mask'][:, None] * batch['seq_mask'][None, :]
         sq_diff = utils.mask_mean(mask, sq_diff)
         # Early stopping criteria based on criteria used in
