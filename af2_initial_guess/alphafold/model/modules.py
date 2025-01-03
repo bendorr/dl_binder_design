@@ -1550,6 +1550,10 @@ def pseudo_beta_fn(aatype, all_atom_positions, all_atom_masks):
 
   print("cb_idx: ", cb_idx)
 
+  print("jnp.tile(is_gly[..., None], [1] * len(is_gly.shape) + [3]):", jnp.tile(is_gly[..., None], [1] * len(is_gly.shape) + [3]).shape)
+  print("all_atom_positions[..., ca_idx, :]: ", all_atom_positions[..., ca_idx, :].shape)
+  print("all_atom_positions[..., cb_idx, :]: ", all_atom_positions[..., cb_idx, :].shape)
+
   pseudo_beta = jnp.where(
       jnp.tile(is_gly[..., None], [1] * len(is_gly.shape) + [3]),
       all_atom_positions[..., ca_idx, :],
