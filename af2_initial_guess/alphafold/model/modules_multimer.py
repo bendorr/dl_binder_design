@@ -714,7 +714,12 @@ class EmbeddingsAndEvoformer(hk.Module):
       preprocess_msa = common_modules.Linear(
           c.msa_channel, name='preprocess_msa')(
               msa_feat)
+      
+      print("preprocess_msa.shape: ", preprocess_msa.shape)
+
       msa_activations = jnp.expand_dims(preprocess_1d, axis=0) + preprocess_msa
+
+      print("msa_activations.shape: ", msa_activations.shape)
 
       left_single = common_modules.Linear(
           c.pair_channel, name='left_single')(
