@@ -17,9 +17,7 @@ from jax.lib import xla_bridge
 from alphafold.common import residue_constants
 from alphafold.common import protein
 from alphafold.common import confidence
-# from alphafold.data import pipeline
-### Ben Orr 1.2.25: Importing pipeline_multimer instead of pipeline
-from alphafold.data import pipeline_multimer as pipeline
+from alphafold.data import pipeline
 from alphafold.model import data
 from alphafold.model import config
 from alphafold.model import model
