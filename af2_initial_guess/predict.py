@@ -315,7 +315,7 @@ class AF2_runner():
 
         ### Ben Orr 1.2.25: Add the msa_mask to the feature_dict
         ### The feature_dict does not contain an msa key when running af2 monomer models
-        # feature_dict['msa_mask'] = np.ones_like(feature_dict['msa'], dtype=bool)
+        feature_dict['msa_mask'] = np.ones_like(feature_dict['msa'], dtype=bool)
 
         # Run model
         start = timer()
