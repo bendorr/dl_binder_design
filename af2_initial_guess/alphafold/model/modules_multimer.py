@@ -223,7 +223,9 @@ def create_msa_feat(batch):
   return jnp.concatenate(msa_feat, axis=-1)
 
 
-def create_extra_msa_feature(batch, num_extra_msa):
+### Ben Orr 1.2.25: This was the original create_extra_msa_feature function in modules_multimer.py
+### Replaced with the function below.
+def og_multimer_create_extra_msa_feature(batch, num_extra_msa):
   """Expand extra_msa into 1hot and concat with other extra msa features.
 
   We do this as late as possible as the one_hot extra msa can be very large.
@@ -248,6 +250,31 @@ def create_extra_msa_feature(batch, num_extra_msa):
   extra_msa_mask = batch['extra_msa_mask'][:num_extra_msa]
   return jnp.concatenate([msa_1hot, has_deletion, deletion_value],
                          axis=-1), extra_msa_mask
+
+### Ben Orr 1.2.25: Using create_extra_msa_feature from af2_initial_guess.alphafold.model
+def create_extra_msa_feature(batch):
+  """Expand extra_msa into 1hot and concat with other extra msa features.
+
+  We do this as late as possible as the one_hot extra msa can be very large.
+
+  Arguments:
+    batch: a dictionary with the following keys:
+     * 'extra_msa': [N_extra_seq, N_res] MSA that wasn't selected as a cluster
+       centre. Note, that this is not one-hot encoded.
+     * 'extra_has_deletion': [N_extra_seq, N_res] Whether there is a deletion to
+       the left of each position in the extra MSA.
+     * 'extra_deletion_value': [N_extra_seq, N_res] The number of deletions to
+       the left of each position in the extra MSA.
+
+  Returns:
+    Concatenated tensor of extra MSA features.
+  """
+  # 23 = 20 amino acids + 'X' for unknown + gap + bert mask
+  msa_1hot = jax.nn.one_hot(batch['extra_msa'], 23)
+  msa_feat = [msa_1hot,
+              jnp.expand_dims(batch['extra_has_deletion'], axis=-1),
+              jnp.expand_dims(batch['extra_deletion_value'], axis=-1)]
+  return jnp.concatenate(msa_feat, axis=-1)
 
 
 def sample_msa(key, batch, max_seq):
