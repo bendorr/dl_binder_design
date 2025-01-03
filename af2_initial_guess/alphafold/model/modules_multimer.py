@@ -505,6 +505,11 @@ class AlphaFold(hk.Module):
         batch['seq_mask'] = np.ones_like([], shape=(num_res,1), dtype=np.float32)
         
         mask = batch['seq_mask'][:, None] * batch['seq_mask'][None, :]
+
+        ### Ben Orr 1.2.25: Mask and sq_diff shapes
+        print(f"Mask shape: {mask.shape}")
+        print(f"sq_diff shape: {sq_diff.shape}")
+
         sq_diff = utils.mask_mean(mask, sq_diff)
         # Early stopping criteria based on criteria used in
         # AF2Complex: https://www.nature.com/articles/s41467-022-29394-2
