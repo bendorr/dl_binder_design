@@ -216,10 +216,11 @@ def create_msa_feat(batch):
   # deletion_mean_value = (jnp.arctan(batch['cluster_deletion_mean'] / 3.) *
   #                        (2. / jnp.pi))[..., None]
   ### Ben Orr 1.2.25: Setting a dummy deletion_mean_value
-  deletion_mean_value = np.zeros(batch['msa'].shape, dtype=np.float32)
+  ### [..., None] adds a dimension to an array
+  deletion_mean_value = np.zeros(batch['msa'].shape, dtype=np.float32)[..., None]
 
   ### Ben Orr 1.2.25: Setting a dummy batch['cluster_profile']
-  batch['cluster_profile'] = np.zeros(batch['msa'].shape, dtype=np.float32)
+  batch['cluster_profile'] = np.zeros(batch['msa'].shape, dtype=np.float32)[..., None]
 
   msa_feat = [
       msa_1hot,
