@@ -749,13 +749,21 @@ class EmbeddingsAndEvoformer(hk.Module):
       if c.recycle_pos:
         prev_pseudo_beta = modules.pseudo_beta_fn(
             batch['aatype'], batch['prev_pos'], None)
+        
+        print("prev_pseudo_beta.shape, after c.recycle_pos: ", prev_pseudo_beta.shape)
 
         dgram = modules.dgram_from_positions(
             prev_pseudo_beta, **self.config.prev_pos)
         dgram = dgram.astype(dtype)
+
+        print("dgram.shape, after c.recycle_pos: ", dgram.shape)
+
         pair_activations += common_modules.Linear(
             c.pair_channel, name='prev_pos_linear')(
                 dgram)
+        
+        print("pair_activations.shape, after c.recycle_pos: ", pair_activations.shape)
+
       if c.recycle_features:
         prev_msa_first_row = common_modules.LayerNorm(
             axis=[-1],
@@ -763,7 +771,12 @@ class EmbeddingsAndEvoformer(hk.Module):
             create_offset=True,
             name='prev_msa_first_row_norm')(
                 batch['prev_msa_first_row']).astype(dtype)
+        
+        print("prev_msa_first_row.shape, after c.recycle_features: ", prev_msa_first_row.shape)
+
         msa_activations = msa_activations.at[0].add(prev_msa_first_row)
+
+        print("msa_activations.shape, after c.recycle_features: ", msa_activations.shape)
 
         pair_activations += common_modules.LayerNorm(
             axis=[-1],
@@ -771,6 +784,8 @@ class EmbeddingsAndEvoformer(hk.Module):
             create_offset=True,
             name='prev_pair_norm')(
                 batch['prev_pair']).astype(dtype)
+        
+        print("pair_activations.shape, after c.recycle_features: ", pair_activations.shape)
         
       print("pair_activations.shape, after c.recycle_pos and c.recycle_features: ", pair_activations.shape)
 
