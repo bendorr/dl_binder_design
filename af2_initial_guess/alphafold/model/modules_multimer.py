@@ -220,6 +220,8 @@ def create_msa_feat(batch):
   # deletion_mean_value = np.zeros(batch['msa'].shape, dtype=np.float32)[..., None] # I believe this caused msa_feat to have shape (27, 256) instead of (49, 256)
   temp_deletion_mean_value = (jnp.arctan(batch['msa'] / 3.) * # trying with batch['msa'] instead of batch['cluster_deletion_mean']
                          (2. / jnp.pi))[..., None]
+  print("temp_deletion_mean_value.shape")
+  print(temp_deletion_mean_value.shape)
   deletion_mean_value = np.zeros_like(temp_deletion_mean_value)
 
   ### Ben Orr 1.2.25: Setting a dummy batch['cluster_profile']
