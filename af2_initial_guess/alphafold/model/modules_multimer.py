@@ -746,6 +746,9 @@ class EmbeddingsAndEvoformer(hk.Module):
       print("pair_activations.shape: ", pair_activations.shape)
       print("mask_2d.shape: ", mask_2d.shape)
 
+      print("c.recycle_pos: ", c.recycle_pos)
+      print("c.recycle_features: ", c.recycle_features)
+
       if c.recycle_pos:
         prev_pseudo_beta = modules.pseudo_beta_fn(
             batch['aatype'], batch['prev_pos'], None)
