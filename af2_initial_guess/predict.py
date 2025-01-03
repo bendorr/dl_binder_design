@@ -101,7 +101,7 @@ class AF2_runner():
         self.struct_manager = struct_manager
 
         # Other models may be run but their weights will also need to be downloaded
-        self.model_name = "model_1_ptm"
+        self.model_name = "model_2_ptm"
         ## Ben Orr 12.30.24: multimer model names in config.CONFIG_DIFFS: model_N_multimer_v3
         # self.model_name = "model_1_multimer_v3"
 
