@@ -502,7 +502,7 @@ class AlphaFold(hk.Module):
                              distances(next_in['prev_pos'][:, ca_idx, :]))
         
         ### Ben Orr 1.2.25: Adding batch['seq_mask'] to be all 1's (all positions considered)
-        batch['seq_mask'] = np.ones_like(batch['aatype'].shape[0], shape=(batch['aatype'].shape[0], batch['aatype'].shape[0]), dtype=np.float32)
+        batch['seq_mask'] = np.ones_like(prev['prev_pos'][:, ca_idx, :], shape=(len(prev['prev_pos'][:, ca_idx, :]), len(prev['prev_pos'][:, ca_idx, :])), dtype=np.float32)
         
         mask = batch['seq_mask'][:, None] * batch['seq_mask'][None, :]
         sq_diff = utils.mask_mean(mask, sq_diff)
