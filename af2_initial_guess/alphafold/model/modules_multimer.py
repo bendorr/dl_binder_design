@@ -694,7 +694,12 @@ class EmbeddingsAndEvoformer(hk.Module):
       # (batch['cluster_profile'],
       #  batch['cluster_deletion_mean']) = nearest_neighbor_clusters(batch)
 
-      msa_feat = create_msa_feat(batch).astype(dtype)
+      # msa_feat = create_msa_feat(batch).astype(dtype)
+
+      ### Ben Orr 1.2.25: Reshape msa_feat to match n_params for preprocess_msa
+      temp_msa_feat = create_msa_feat(batch).astype(dtype)
+      msa_feat = np.vstack((temp_msa_feat, np.zeros(23,256)))
+      print("msa_feat.shape: ", msa_feat.shape)
 
       preprocess_msa = common_modules.Linear(
           c.msa_channel, name='preprocess_msa')(
