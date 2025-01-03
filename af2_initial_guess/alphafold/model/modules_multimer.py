@@ -741,6 +741,11 @@ class EmbeddingsAndEvoformer(hk.Module):
       mask_2d = batch['seq_mask'][:, None] * batch['seq_mask'][None, :]
       mask_2d = mask_2d.astype(dtype)
 
+      print("left_single.shape: ", left_single.shape)
+      print("right_single.shape: ", right_single.shape)
+      print("pair_activations.shape: ", pair_activations.shape)
+      print("mask_2d.shape: ", mask_2d.shape)
+
       if c.recycle_pos:
         prev_pseudo_beta = modules.pseudo_beta_fn(
             batch['aatype'], batch['prev_pos'], None)
@@ -766,6 +771,8 @@ class EmbeddingsAndEvoformer(hk.Module):
             create_offset=True,
             name='prev_pair_norm')(
                 batch['prev_pair']).astype(dtype)
+        
+      print("pair_activations.shape, after c.recycle_pos and c.recycle_features: ", pair_activations.shape)
 
       if c.max_relative_idx:
         pair_activations += self._relative_encoding(batch)
@@ -873,6 +880,11 @@ class EmbeddingsAndEvoformer(hk.Module):
       def run_evoformer(evoformer_input):
         evoformer_output, _ = evoformer_stack((evoformer_input, safe_subkey))
         return evoformer_output
+      
+      print("evoformer_input['msa'].shape: ", evoformer_input['msa'].shape)
+      print("evoformer_input['pair'].shape: ", evoformer_input['pair'].shape)
+      for k, v in evoformer_input.items():
+        print("evoformer_input[", k, "].shape: ", v.shape)
 
       evoformer_output = run_evoformer(evoformer_input)
 
