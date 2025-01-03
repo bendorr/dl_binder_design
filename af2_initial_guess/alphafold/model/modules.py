@@ -1563,7 +1563,7 @@ def pseudo_beta_fn(aatype, all_atom_positions, all_atom_masks):
   #     all_atom_positions[..., ca_idx, :],
   #     all_atom_positions[..., cb_idx, :])
   pseudo_beta = jnp.where(
-      is_gly[..., None],
+      jnp.squeeze(jnp.tile(is_gly[..., None], [1] * len(is_gly.shape) + [3]), axis=1), # Remove dimension 1
       all_atom_positions[..., ca_idx, :],
       all_atom_positions[..., cb_idx, :])
   
