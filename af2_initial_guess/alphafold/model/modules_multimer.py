@@ -515,7 +515,13 @@ class AlphaFold(hk.Module):
       ### Ben Orr 1.2.25: Adapted from Nate Bennett.
       ### If an initial guess is provided, add it to the previous positions.
       if emb_config.initial_guess:
+
+        print("initial_guess.shape: ", initial_guess.shape)
+        print("prev['prev_pos'].shape, before adding initial_guess: ", prev['prev_pos'].shape)
+
         prev['prev_pos'] += initial_guess
+
+        print("prev['prev_pos'].shape, after adding initial_guess: ", prev['prev_pos'].shape)
 
     if emb_config.recycle_features:
       prev['prev_msa_first_row'] = jnp.zeros(
