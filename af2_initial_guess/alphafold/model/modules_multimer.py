@@ -208,7 +208,9 @@ def create_msa_feat(batch):
   # deletion_matrix = batch['deletion_matrix']
 
   ### Ben Orr 1.2.25: Setting a dummy deletion_matrix
-  deletion_matrix = np.zeros(batch['msa'].shape, dtype=np.float32)
+  # deletion_matrix = np.zeros(batch['msa'].shape, dtype=np.float32)
+  ### Ben Orr 1.2.25: It appears that af2_initial_guess uses deletion_matrix_int instead of deletion_matrix
+  deletion_matrix = batch['deletion_matrix_int']
 
   has_deletion = jnp.clip(deletion_matrix, 0., 1.)[..., None]
   deletion_value = (jnp.arctan(deletion_matrix / 3.) * (2. / jnp.pi))[..., None]
@@ -218,7 +220,10 @@ def create_msa_feat(batch):
   ### Ben Orr 1.2.25: Setting a dummy deletion_mean_value
   ### [..., None] adds a dimension to an array
   # deletion_mean_value = np.zeros(batch['msa'].shape, dtype=np.float32)[..., None] # I believe this caused msa_feat to have shape (27, 256) instead of (49, 256)
-  deletion_mean_value = np.zeros((1,229,23)) # it appears that I need an extra (1,229,23) zeros to match n_params for alphafold/alphafold_iteration/evoformer/preprocess_msa/weights
+  # deletion_mean_value = np.zeros((1,229,23)) # it appears that I need an extra (1,229,23) zeros to match n_params for alphafold/alphafold_iteration/evoformer/preprocess_msa/weights
+  ### Ben Orr 1.2.25: I'll try using deletion_matrix_int instead of cluster_deletion_mean
+  deletion_mean_value = (jnp.arctan(batch['cluster_deletion_mean'] / 3.) *
+                         (2. / jnp.pi))[..., None]
 
   ### Ben Orr 1.2.25: Setting a dummy batch['cluster_profile']
   batch['cluster_profile'] = np.zeros(batch['msa'].shape, dtype=np.float32)[..., None]
