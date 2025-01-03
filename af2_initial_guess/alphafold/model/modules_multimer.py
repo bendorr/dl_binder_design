@@ -718,9 +718,18 @@ class EmbeddingsAndEvoformer(hk.Module):
       
       print("preprocess_msa.shape: ", preprocess_msa.shape)
 
-      msa_activations = jnp.expand_dims(preprocess_1d, axis=0) + preprocess_msa
+      # msa_activations = jnp.expand_dims(preprocess_1d, axis=0) + preprocess_msa
+      ### Ben Orr 1.3.25: Expanding preprocess_1d dims
+      preprocess_1d_expanded = jnp.expand_dims(preprocess_1d, axis=0)  # Add a new axis at position 0
+      preprocess_1d_expanded = jnp.expand_dims(preprocess_1d_expanded, axis=2)  # Add a new axis at position 2
+
+      msa_activations = jnp.expand_dims(preprocess_1d_expanded, axis=0) + preprocess_msa
 
       print("msa_activations.shape: ", msa_activations.shape)
+
+      print("c.pair_channel: ", c.pair_channel)
+
+      print("target_feat.shape: ", target_feat.shape)
 
       left_single = common_modules.Linear(
           c.pair_channel, name='left_single')(
