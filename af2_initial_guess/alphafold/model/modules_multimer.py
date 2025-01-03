@@ -506,10 +506,6 @@ class AlphaFold(hk.Module):
         
         mask = batch['seq_mask'][:, None] * batch['seq_mask'][None, :]
 
-        ### Ben Orr 1.2.25: Mask and sq_diff shapes
-        print(f"Mask shape: {mask.shape}")
-        print(f"sq_diff shape: {sq_diff.shape}")
-
         sq_diff = utils.mask_mean(mask, sq_diff)
         # Early stopping criteria based on criteria used in
         # AF2Complex: https://www.nature.com/articles/s41467-022-29394-2
@@ -651,8 +647,9 @@ class EmbeddingsAndEvoformer(hk.Module):
       batch = sample_msa(sample_key, batch, c.num_msa)
       batch = make_masked_msa(batch, mask_key, c.masked_msa)
 
-      (batch['cluster_profile'],
-       batch['cluster_deletion_mean']) = nearest_neighbor_clusters(batch)
+      ### Ben Orr 1.2.25: Remove this to avoid needing a batch['extra_deletion_matrix']
+      # (batch['cluster_profile'],
+      #  batch['cluster_deletion_mean']) = nearest_neighbor_clusters(batch)
 
       msa_feat = create_msa_feat(batch).astype(dtype)
 
