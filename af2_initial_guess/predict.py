@@ -297,7 +297,6 @@ class AF2_runner():
         feature_dict, initial_guess = self.featurize(feat_holder)
 
         ### Ben Orr 1.2.25: Printing feature_dict and initial_guess to find dtype object entries
-
         for key in feature_dict:
             try:
                 print(f"{key}: {feature_dict[key].dtype}")
@@ -305,9 +304,6 @@ class AF2_runner():
                 print(f"{key}: {type(feature_dict[key])}")
 
         print(f"initial_guess: {type(initial_guess)}")
-
-        print(f"MSA is:")
-        print(feature_dict['msa'])
 
         ### Ben Orr 1.2.25: Remove the dtype object entries from feature_dict
         print(f"Removing keys sequence and domain_name")
@@ -318,6 +314,9 @@ class AF2_runner():
         del feature_dict['template_sequence']
         del feature_dict['template_domain_names']
         del feature_dict['template_release_date']
+
+        ### Ben Orr 1.2.25: Add the msa_mask to the feature_dict
+        feature_dict['msa_mask'] = np.ones_like(feature_dict['msa'], dtype=bool)
 
         # Run model
         start = timer()
