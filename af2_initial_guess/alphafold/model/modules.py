@@ -1556,14 +1556,13 @@ def pseudo_beta_fn(aatype, all_atom_positions, all_atom_masks):
   print("is_gly[..., None]: ", is_gly[..., None].shape)
 
   ### Ben Orr 1.3.25: This gives an error when trying to broadcast
-  ### [(229, 21, 3), (229, 3), (229, 3)]. I'll try removing the second
-  ### dimension of jnp.tile(...)
+  ### [(229, 21, 3), (229, 3), (229, 3)]. I'll try slicing the is_gly array.
   # pseudo_beta = jnp.where(
   #     jnp.tile(is_gly[..., None], [1] * len(is_gly.shape) + [3]),
   #     all_atom_positions[..., ca_idx, :],
   #     all_atom_positions[..., cb_idx, :])
   pseudo_beta = jnp.where(
-      jnp.squeeze(jnp.tile(is_gly[..., None], [1] * len(is_gly.shape) + [3]), axis=1), # Remove dimension 1
+      jnp.tile(is_gly[..., None], [1] * len(is_gly.shape) + [3])[:,0,:],
       all_atom_positions[..., ca_idx, :],
       all_atom_positions[..., cb_idx, :])
   
