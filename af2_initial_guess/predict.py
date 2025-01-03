@@ -314,8 +314,8 @@ class AF2_runner():
                 print(f"Key {key} not found in feature_dict")
 
         ### Ben Orr 1.2.25: Add the msa_mask to the feature_dict
-        if model_config.model.global_config.multimer_mode:
-            feature_dict['msa_mask'] = np.ones_like(feature_dict['msa'], dtype=bool)
+        ### The feature_dict does not contain an msa key when running af2 monomer models
+        # feature_dict['msa_mask'] = np.ones_like(feature_dict['msa'], dtype=bool)
 
         # Run model
         start = timer()
