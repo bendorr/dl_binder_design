@@ -229,8 +229,8 @@ def create_msa_feat(batch):
   temp_deletion_mean_value = (jnp.arctan(batch['deletion_matrix_int'] / 3.) *
                          (2. / jnp.pi))[..., None]
   print("temp_deletion_mean_value.shape: ", temp_deletion_mean_value.shape)
-  ### Ben Orr 1.3.24: Instead of hard-coding 229 here, use batch['msa'].shape[0]
-  deletion_mean_value = jnp.concatenate([temp_deletion_mean_value, jnp.zeros((1,batch['msa'].shape[0],22))], axis=-1)
+  ### Ben Orr 1.3.24: Instead of hard-coding 229 here, use batch['deletion_matrix_int'].shape[-1]
+  deletion_mean_value = jnp.concatenate([temp_deletion_mean_value, jnp.zeros((1,batch['deletion_matrix_int'].shape[-1],22))], axis=-1)
   print("deletion_mean_value.shape: ", deletion_mean_value.shape)
 
   ### Ben Orr 1.2.25: Setting a dummy batch['cluster_profile']
