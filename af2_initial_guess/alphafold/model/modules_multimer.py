@@ -229,7 +229,7 @@ def create_msa_feat(batch):
   temp_deletion_mean_value = (jnp.arctan(batch['deletion_matrix_int'] / 3.) *
                          (2. / jnp.pi))[..., None]
   print("temp_deletion_mean_value.shape: ", temp_deletion_mean_value.shape)
-  deletion_mean_value = jnp.vstack((temp_deletion_mean_value, jnp.zeros((1,229,22))))
+  deletion_mean_value = jnp.vstack((temp_deletion_mean_value, jnp.zeros((1,229,22))), dim=-1)
   print("deletion_mean_value.shape: ", deletion_mean_value.shape)
 
   ### Ben Orr 1.2.25: Setting a dummy batch['cluster_profile']
