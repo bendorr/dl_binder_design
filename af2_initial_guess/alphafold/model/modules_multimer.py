@@ -226,8 +226,10 @@ def create_msa_feat(batch):
   # deletion_mean_value = np.zeros(batch['msa'].shape, dtype=np.float32)[..., None] # I believe this caused msa_feat to have shape (27, 256) instead of (49, 256)
   # deletion_mean_value = np.zeros((1,229,23)) # it appears that I need an extra (1,229,23) zeros to match n_params for alphafold/alphafold_iteration/evoformer/preprocess_msa/weights
   ### Ben Orr 1.2.25: I'll try using deletion_matrix_int instead of cluster_deletion_mean
-  deletion_mean_value = (jnp.arctan(batch['deletion_matrix_int'] / 3.) *
+  temp_deletion_mean_value = (jnp.arctan(batch['deletion_matrix_int'] / 3.) *
                          (2. / jnp.pi))[..., None]
+  print("temp_deletion_mean_value.shape: ", temp_deletion_mean_value.shape)
+  deletion_mean_value = jnp.vstack(temp_deletion_mean_value, jnp.zeros((1,229,22)))
   print("deletion_mean_value.shape: ", deletion_mean_value.shape)
 
   ### Ben Orr 1.2.25: Setting a dummy batch['cluster_profile']
